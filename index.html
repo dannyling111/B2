@@ -3,621 +3,169 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>網上心理輔導 | Mehliu 咩寮</title>
+  <title>Mehliu 咩寮 · 設計方案比較</title>
   <style>
-    /* ── PALETTE ───────────────────────────────────────────── */
     :root {
-      --deep:    #003B31;
-      --forest:  #2B4742;
-      --sage:    #85987D;
-      --mint:    #BCD1CD;
-      --cream:   #EEE9E4;
-      --white:   #FFFFFF;
-      --dark:    #1a1a1a;
-      --mid:     #555;
+      --forest: #2B4742;
+      --deep:   #003B31;
+      --ink:    #1A2E2A;
+      --sage:   #85987D;
+      --mint:   #BCD1CD;
+      --cream:  #F5F0EB;
+      --gold:   #C9A970;
+      --white:  #FFFFFF;
     }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px}
+    body{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;background:var(--ink);color:var(--white);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;-webkit-font-smoothing:antialiased}
 
-    /* ── RESET ─────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-      color: var(--dark);
-      background: var(--white);
-      overflow-x: hidden;
-    }
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:2.5px;color:var(--sage);text-transform:uppercase;margin-bottom:16px;text-align:center}
+    h1{font-size:clamp(32px,5vw,52px);font-weight:800;color:var(--white);text-align:center;letter-spacing:-1px;line-height:1.15;margin-bottom:14px}
+    h1 em{font-style:normal;color:var(--mint)}
+    .lead{font-size:16px;color:rgba(255,255,255,.5);text-align:center;line-height:1.8;max-width:540px;margin:0 auto 64px}
 
-    /* ── NAV ────────────────────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-      height: 68px;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(43,71,66,0.08);
-      display: flex; align-items: center; padding: 0 48px;
-      gap: 40px;
-    }
-    .nav-logo {
-      text-decoration: none;
-      font-size: 20px;
-      font-weight: 700;
-      font-style: italic;
-      color: var(--forest);
-      letter-spacing: 1px;
-      white-space: nowrap;
-    }
-    .nav-logo small {
-      font-style: normal; font-weight: 400;
-      font-size: 13px; color: var(--sage); margin-left: 6px;
-    }
-    .nav-links {
-      display: flex; align-items: center;
-      gap: 28px; list-style: none; margin-left: auto;
-    }
-    .nav-links a {
-      text-decoration: none; color: var(--forest);
-      font-size: 14px; font-weight: 500;
-      transition: color .2s; white-space: nowrap;
-    }
-    .nav-links a:hover { color: var(--deep); }
-    .nav-cta {
-      background: var(--forest) !important;
-      color: var(--white) !important;
-      padding: 9px 22px !important;
-      border-radius: 50px !important;
-    }
-    .nav-cta:hover { background: var(--deep) !important; }
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;width:100%;max-width:1060px;margin-bottom:48px}
 
-    /* ── HERO ───────────────────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #2B4742 0%, #003B31 55%, #001f1a 100%);
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; color: var(--white);
-      padding: 110px 40px 80px;
-      position: relative; overflow: hidden;
-    }
-    #hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 75% 35%, rgba(133,152,125,.18) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 20% 75%, rgba(188,209,205,.12) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .hero-inner { position: relative; z-index: 1; max-width: 680px; }
-    .hero-brand {
-      font-size: clamp(52px, 9vw, 88px);
-      font-weight: 300;
-      letter-spacing: 4px; line-height: 1.1;
-      margin-bottom: 10px;
-    }
-    .hero-brand em {
-      font-style: italic; font-weight: 800;
-      color: var(--mint);
-    }
-    .hero-tagline {
-      font-size: clamp(20px, 3.5vw, 30px);
-      font-weight: 300; letter-spacing: 3px;
-      opacity: .9; margin-bottom: 28px;
-    }
-    .hero-pills {
-      display: flex; justify-content: center;
-      gap: 12px; flex-wrap: wrap; margin-bottom: 52px;
-    }
-    .pill {
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.22);
-      color: var(--mint);
-      padding: 7px 22px; border-radius: 50px;
-      font-size: 14px; letter-spacing: 2px;
-    }
-    .btn-primary {
-      display: inline-block;
-      background: var(--white); color: var(--forest);
-      padding: 16px 52px; border-radius: 50px;
-      font-size: 17px; font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 6px 24px rgba(0,0,0,.25);
-      transition: all .25s;
-    }
-    .btn-primary:hover {
-      background: var(--mint);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 36px rgba(0,0,0,.3);
-    }
-    .scroll-arrow {
-      position: absolute; bottom: 30px; left: 50%;
-      transform: translateX(-50%);
-      opacity: .45; animation: bob 2s infinite;
-      font-size: 22px; color: var(--white);
-      text-decoration: none;
-    }
-    @keyframes bob {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50%     { transform: translateX(-50%) translateY(8px); }
-    }
+    .card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;transition:transform .3s,box-shadow .3s;cursor:pointer}
+    .card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+    .card.recommended{border-color:var(--mint);border-width:1.5px;background:rgba(188,209,205,.08)}
 
-    /* ── SHARED SECTION ─────────────────────────────────────── */
-    section { padding: 100px 48px; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .sec-title {
-      text-align: center; font-size: clamp(28px, 4vw, 40px);
-      font-weight: 700; color: var(--forest); margin-bottom: 12px;
-    }
-    .sec-sub {
-      text-align: center; font-size: 15px;
-      color: var(--sage); letter-spacing: 1px; margin-bottom: 60px;
-    }
-    .btn-outline {
-      display: inline-block;
-      border: 2px solid var(--forest); color: var(--forest);
-      padding: 12px 32px; border-radius: 50px;
-      font-size: 15px; font-weight: 600;
-      text-decoration: none; transition: all .22s;
-    }
-    .btn-outline:hover { background: var(--forest); color: var(--white); }
+    .card-preview{height:260px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    /* V1 preview */
+    .preview-v1{background:linear-gradient(135deg,#2B4742 0%,#003B31 100%);width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px}
+    .pv1-title{font-size:28px;font-weight:800;font-style:italic;color:var(--mint)}
+    .pv1-sub{font-size:12px;color:rgba(255,255,255,.6);letter-spacing:2px}
+    .pv1-pills{display:flex;gap:8px}
+    .pv1-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--white);padding:4px 12px;border-radius:20px;font-size:11px}
+    .pv1-btn{background:var(--white);color:var(--forest);padding:8px 24px;border-radius:20px;font-size:12px;font-weight:700;margin-top:4px}
+    /* V2 preview */
+    .preview-v2{background:#F5F0EB;width:100%;height:100%;padding:24px;display:flex;flex-direction:column;justify-content:center}
+    .pv2-tag{display:inline-block;background:rgba(201,169,112,.2);color:#8a6820;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 12px;border-radius:4px;margin-bottom:12px}
+    .pv2-h{font-size:24px;font-weight:800;color:#1A2E2A;line-height:1.25;margin-bottom:8px}
+    .pv2-h em{font-style:normal;color:#2B4742;border-bottom:2.5px solid #C9A970}
+    .pv2-sub{font-size:12px;color:#6B7280;line-height:1.6;margin-bottom:14px}
+    .pv2-dots{display:flex;gap:6px}
+    .pv2-dot{font-size:11px;color:#85987D;display:flex;align-items:center;gap:4px}
+    .pv2-dot::before{content:'';width:4px;height:4px;background:#85987D;border-radius:50%;display:inline-block}
+    .pv2-btn{background:#2B4742;color:#fff;padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;margin-top:14px;display:inline-block}
 
-    /* ── WHY US ─────────────────────────────────────────────── */
-    #why { background: var(--cream); }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
-      gap: 22px;
-    }
-    .f-card {
-      background: var(--white); border-radius: 18px;
-      padding: 36px 26px; text-align: center;
-      border: 1px solid rgba(133,152,125,.18);
-      transition: transform .22s, box-shadow .22s;
-    }
-    .f-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 14px 44px rgba(43,71,66,.1);
-    }
-    .f-icon {
-      width: 58px; height: 58px;
-      background: var(--mint); border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 18px; font-size: 26px;
-    }
-    .f-card h3 {
-      font-size: 16px; font-weight: 700;
-      color: var(--forest); margin-bottom: 10px;
-    }
-    .f-card p { font-size: 14px; color: var(--mid); line-height: 1.75; }
+    .card-body{padding:28px 32px}
+    .card-label{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--sage);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+    .rec-badge{background:var(--mint);color:var(--ink);padding:3px 10px;border-radius:4px;font-size:10px;font-weight:800;letter-spacing:.5px}
+    .card-title{font-size:20px;font-weight:800;color:var(--white);margin-bottom:10px}
+    .card-desc{font-size:14px;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:24px}
+    .card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .tag{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:12px;padding:4px 12px;border-radius:4px}
+    .card-cta{display:block;text-align:center;background:rgba(255,255,255,.1);color:var(--white);border:1px solid rgba(255,255,255,.15);padding:13px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;transition:all .2s}
+    .card-cta:hover{background:rgba(255,255,255,.18)}
+    .card.recommended .card-cta{background:var(--mint);color:var(--ink);border-color:var(--mint)}
+    .card.recommended .card-cta:hover{background:var(--white)}
 
-    /* ── ABOUT ──────────────────────────────────────────────── */
-    #about { background: var(--white); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; align-items: center;
-    }
-    .about-text h2 {
-      font-size: clamp(24px, 3vw, 34px);
-      font-weight: 700; color: var(--forest);
-      line-height: 1.35; margin-bottom: 22px;
-    }
-    .about-text p {
-      font-size: 15px; color: var(--mid);
-      line-height: 1.9; margin-bottom: 14px;
-    }
-    .about-visual {
-      background: linear-gradient(135deg, var(--mint) 0%, var(--sage) 100%);
-      border-radius: 24px; padding: 48px 40px;
-    }
-    .a-stat { margin-bottom: 28px; }
-    .a-stat:last-child { margin-bottom: 0; }
-    .a-stat .num {
-      font-size: 38px; font-weight: 800;
-      color: var(--white); line-height: 1;
-    }
-    .a-stat .lbl {
-      font-size: 14px; color: rgba(255,255,255,.8);
-      margin-top: 4px;
-    }
+    .diff-table{width:100%;max-width:1060px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;margin-bottom:48px;border-collapse:collapse}
+    .diff-table th{background:rgba(255,255,255,.07);padding:14px 20px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.5px;text-align:left}
+    .diff-table td{padding:14px 20px;font-size:14px;color:rgba(255,255,255,.65);border-top:1px solid rgba(255,255,255,.05)}
+    .diff-table td:first-child{color:rgba(255,255,255,.4);font-size:13px}
+    .check{color:var(--mint);font-weight:700}
+    .cross{color:rgba(255,255,255,.2)}
 
-    /* ── COUNSELORS ─────────────────────────────────────────── */
-    #counselors { background: var(--cream); }
-    .counselors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 26px;
-    }
-    .c-card {
-      background: var(--white); border-radius: 20px;
-      overflow: hidden;
-      transition: transform .22s, box-shadow .22s;
-    }
-    .c-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 18px 52px rgba(43,71,66,.12);
-    }
-    .c-photo {
-      height: 200px;
-      background: linear-gradient(135deg, var(--sage) 0%, var(--forest) 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 72px;
-    }
-    .c-info { padding: 26px; }
-    .c-info h3 {
-      font-size: 18px; font-weight: 700;
-      color: var(--forest); margin-bottom: 5px;
-    }
-    .c-role {
-      font-size: 12px; font-weight: 600;
-      color: var(--sage); letter-spacing: .5px; margin-bottom: 12px;
-    }
-    .c-info p { font-size: 13px; color: var(--mid); line-height: 1.7; }
+    .footer-note{font-size:13px;color:rgba(255,255,255,.25);text-align:center}
 
-    /* ── PRICING ────────────────────────────────────────────── */
-    #pricing { background: var(--deep); color: var(--white); }
-    #pricing .sec-title { color: var(--white); }
-    #pricing .sec-sub { color: var(--mint); }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-    .p-card {
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.11);
-      border-radius: 20px; padding: 38px 28px;
-      text-align: center; position: relative;
-      transition: all .22s;
-    }
-    .p-card:hover { background: rgba(255,255,255,.13); transform: translateY(-4px); }
-    .p-card.featured {
-      background: rgba(188,209,205,.15);
-      border-color: var(--mint); border-width: 2px;
-    }
-    .badge {
-      position: absolute; top: -13px; left: 50%;
-      transform: translateX(-50%);
-      background: var(--mint); color: var(--deep);
-      font-size: 12px; font-weight: 700;
-      padding: 4px 18px; border-radius: 50px;
-      white-space: nowrap;
-    }
-    .p-sessions {
-      font-size: 13px; font-weight: 700;
-      color: var(--mint); letter-spacing: 1px; margin-bottom: 14px;
-    }
-    .p-price {
-      font-size: clamp(38px, 5vw, 54px);
-      font-weight: 800; line-height: 1;
-    }
-    .p-price sub { font-size: 16px; font-weight: 400; opacity: .65; }
-    .p-per { font-size: 13px; opacity: .55; margin: 6px 0 22px; }
-    .p-btn {
-      display: block;
-      background: var(--white); color: var(--forest);
-      padding: 12px; border-radius: 50px;
-      font-weight: 700; font-size: 14px;
-      text-decoration: none; transition: all .2s;
-    }
-    .p-btn:hover { background: var(--mint); }
-    .trial-box {
-      text-align: center; margin-top: 48px;
-      background: rgba(255,255,255,.06);
-      border: 1px dashed rgba(188,209,205,.4);
-      border-radius: 16px; padding: 30px 24px;
-    }
-    .trial-box h3 { font-size: 17px; color: var(--mint); margin-bottom: 8px; }
-    .trial-box p  { font-size: 14px; opacity: .7; line-height: 1.7; }
-
-    /* ── TESTIMONIALS ───────────────────────────────────────── */
-    #testimonials { background: var(--cream); }
-    .t-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    .t-card {
-      background: var(--white); border-radius: 16px;
-      padding: 30px; border-left: 4px solid var(--mint);
-      box-shadow: 0 4px 20px rgba(43,71,66,.06);
-    }
-    .t-text {
-      font-size: 15px; color: var(--mid);
-      line-height: 1.85; margin-bottom: 18px;
-    }
-    .t-author { font-size: 13px; color: var(--sage); font-weight: 600; }
-    .stars { color: #f4a947; font-size: 14px; margin-bottom: 10px; }
-
-    /* ── CONTACT ────────────────────────────────────────────── */
-    #contact {
-      background: var(--forest);
-      color: var(--white); text-align: center;
-    }
-    #contact .sec-title { color: var(--white); margin-bottom: 10px; }
-    .contact-tag {
-      font-size: clamp(18px, 3vw, 26px);
-      color: var(--mint); font-weight: 300;
-      letter-spacing: 2px; margin-bottom: 10px;
-    }
-    .contact-lead {
-      font-size: 16px; opacity: .65; margin-bottom: 44px;
-    }
-    .contact-links {
-      display: flex; justify-content: center;
-      flex-wrap: wrap; gap: 28px; margin-top: 44px;
-    }
-    .contact-links a {
-      color: var(--mint); text-decoration: none;
-      font-size: 14px; opacity: .75;
-      transition: opacity .2s;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .contact-links a:hover { opacity: 1; }
-
-    /* ── FOOTER ─────────────────────────────────────────────── */
-    footer {
-      background: var(--deep);
-      color: rgba(255,255,255,.35);
-      text-align: center; padding: 26px 40px;
-      font-size: 13px; line-height: 1.8;
-    }
-    footer a { color: var(--mint); text-decoration: none; }
-
-    /* ── RESPONSIVE ─────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .about-visual { display: none; }
-    }
-    @media (max-width: 680px) {
-      nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      section { padding: 72px 24px; }
-      .btn-primary { padding: 14px 40px; font-size: 16px; }
-    }
+    @media(max-width:600px){.cards{grid-template-columns:1fr}.diff-table{font-size:12px}}
   </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════
-     NAV
-════════════════════════════════════════════ -->
-<nav>
-  <a href="#hero" class="nav-logo">Mehliu <small>咩寮</small></a>
-  <ul class="nav-links">
-    <li><a href="#why">為何選擇我們</a></li>
-    <li><a href="#about">關於我們</a></li>
-    <li><a href="#counselors">輔導員</a></li>
-    <li><a href="#pricing">收費</a></li>
-    <li><a href="#testimonials">客戶評價</a></li>
-    <li><a href="https://www.mehliu.hk/booking" class="nav-cta">立即預約</a></li>
-  </ul>
-</nav>
+  <p class="eyebrow">Mehliu 咩寮 · 設計方案</p>
+  <h1>兩個方向，<em>你選哪個？</em></h1>
+  <p class="lead">以下是針對 mehliu.hk 的兩個重新設計方向，<br>保留原有配色，各有不同設計策略。</p>
 
-<!-- ════════════════════════════════════════════
-     HERO
-════════════════════════════════════════════ -->
-<section id="hero">
-  <div class="hero-inner">
-    <div class="hero-brand">咩寮 <em>Mehliu</em></div>
-    <div class="hero-tagline">讓聊天帶來心靈療癒</div>
-    <div class="hero-pills">
-      <span class="pill">咩料</span>
-      <span class="pill">咩聊</span>
-      <span class="pill">咩療</span>
+  <div class="cards">
+
+    <!-- V1 -->
+    <div class="card" onclick="window.open('v1.html','_blank')">
+      <div class="card-preview">
+        <div class="preview-v1">
+          <div class="pv1-title">Mehliu</div>
+          <div class="pv1-sub">讓聊天帶來心靈療癒</div>
+          <div class="pv1-pills">
+            <span class="pv1-pill">咩料</span>
+            <span class="pv1-pill">咩聊</span>
+            <span class="pv1-pill">咩療</span>
+          </div>
+          <div class="pv1-btn">立即預約</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-label">方案 A · V1</div>
+        <div class="card-title">修正版 — 深綠沉浸式</div>
+        <p class="card-desc">在原有設計基礎上改良：加入咩料/咩聊/咩療說明區、SVG 圖標替換 emoji、優化信息架構。風格偏沉穩、溫厚。</p>
+        <div class="card-tags">
+          <span class="tag">咩寮三部曲說明</span>
+          <span class="tag">深綠沉浸 Hero</span>
+          <span class="tag">SVG 圖標</span>
+          <span class="tag">單頁滾動</span>
+        </div>
+        <a href="v1.html" target="_blank" class="card-cta">查看 V1 設計 →</a>
+      </div>
     </div>
-    <a href="https://www.mehliu.hk/booking" class="btn-primary">立即預約</a>
+
+    <!-- V2 -->
+    <div class="card recommended" onclick="window.open('v2.html','_blank')">
+      <div class="card-preview">
+        <div class="preview-v2">
+          <span class="pv2-tag">✦ 香港首選網上心理輔導平台</span>
+          <div class="pv2-h">讓聊天<br>帶來<em>心靈療癒</em></div>
+          <p class="pv2-sub">由香港大學社工碩士創立，專業、親民、保密。</p>
+          <div class="pv2-dots">
+            <span class="pv2-dot">註冊社工</span>
+            <span class="pv2-dot">$250 體驗</span>
+            <span class="pv2-dot">嚴格保密</span>
+          </div>
+          <span class="pv2-btn">立即預約輔導 →</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-label">方案 B · V2 <span class="rec-badge">推薦</span></div>
+        <div class="card-title">專業版 — 對標全球頂級</div>
+        <p class="card-desc">對標 BetterHelp、Talkspace 等國際平台。暖米白背景、金色點綴、滾動入場動畫、FAQ 手風琴、更強信任感設計。</p>
+        <div class="card-tags">
+          <span class="tag">暖色系 · 更具信任感</span>
+          <span class="tag">滾動入場動畫</span>
+          <span class="tag">FAQ 手風琴</span>
+          <span class="tag">金色點綴</span>
+          <span class="tag">How It Works</span>
+          <span class="tag">Hero 雙欄佈局</span>
+        </div>
+        <a href="v2.html" target="_blank" class="card-cta">查看 V2 設計 →</a>
+      </div>
+    </div>
+
   </div>
-  <a href="#why" class="scroll-arrow" aria-label="向下滾動">↓</a>
-</section>
 
-<!-- ════════════════════════════════════════════
-     WHY US
-════════════════════════════════════════════ -->
-<section id="why">
-  <div class="container">
-    <h2 class="sec-title">為什麼要選擇咩寮？</h2>
-    <p class="sec-sub">專業 · 親民 · 保密 · 方便</p>
-    <div class="features-grid">
-      <div class="f-card">
-        <div class="f-icon">🎓</div>
-        <h3>專業社工 / 心理輔導員</h3>
-        <p>輔導員均為社會工作者註冊局註冊社工，具多年情緒輔導前線經驗。</p>
-      </div>
-      <div class="f-card">
-        <div class="f-icon">🌱</div>
-        <h3>輔導體驗</h3>
-        <p>提供 $250 / 30分鐘輔導體驗，讓你以優惠價錢，輕鬆開啟輔導之門。</p>
-      </div>
-      <div class="f-card">
-        <div class="f-icon">💰</div>
-        <h3>大眾化收費</h3>
-        <p>以更親民的收費降低接受優質輔導服務的門檻，讓每個人都能得到支援。</p>
-      </div>
-      <div class="f-card">
-        <div class="f-icon">📱</div>
-        <h3>彈性方便</h3>
-        <p>一般三日內預約，最快即日服務。只要有電腦或電話，隨時隨地接受輔導。</p>
-      </div>
-      <div class="f-card">
-        <div class="f-icon">🔒</div>
-        <h3>嚴格保密</h3>
-        <p>除非談話內容影響生命安全，否則輔導內容一切保密，讓你放心傾訴。</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- Comparison Table -->
+  <table class="diff-table">
+    <thead>
+      <tr>
+        <th>功能 / 特性</th>
+        <th>原版 mehliu.hk</th>
+        <th>V1 修正版</th>
+        <th>V2 專業版</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>頁面結構</td><td>多頁跳轉</td><td class="check">✓ 單頁滾動</td><td class="check">✓ 單頁滾動</td></tr>
+      <tr><td>咩料/咩聊/咩療說明</td><td class="cross">✗ 無說明</td><td class="check">✓ 獨立 Section</td><td class="check">✓ Hero + Section</td></tr>
+      <tr><td>導航欄</td><td>靜態，易截斷</td><td class="check">✓ 黏性 + 玻璃磨砂</td><td class="check">✓ 黏性 + 底線動效</td></tr>
+      <tr><td>圖標設計</td><td class="cross">✗ Emoji</td><td class="check">✓ SVG 線條圖標</td><td class="check">✓ SVG 圖標</td></tr>
+      <tr><td>滾動動畫</td><td class="cross">✗ 無</td><td class="cross">✗ 無</td><td class="check">✓ Intersection Observer</td></tr>
+      <tr><td>FAQ 區塊</td><td class="cross">✗ 獨立頁面</td><td class="cross">✗ 無</td><td class="check">✓ 手風琴折疊</td></tr>
+      <tr><td>信任信號</td><td>較弱</td><td>中等</td><td class="check">✓ 強 (資格/即日/保密)</td></tr>
+      <tr><td>定價「慳幾多」說明</td><td class="cross">✗ 無</td><td class="cross">✗ 無</td><td class="check">✓ 明確顯示節省金額</td></tr>
+      <tr><td>行動呼籲 (CTA)</td><td>1 個</td><td>多處</td><td class="check">✓ 全頁多觸點</td></tr>
+    </tbody>
+  </table>
 
-<!-- ════════════════════════════════════════════
-     ABOUT
-════════════════════════════════════════════ -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-text">
-        <h2>由香港社工創立<br>為你而生</h2>
-        <p>咩寮由香港大學及海外大學社會工作碩士畢業的註冊社工及心理輔導師創立，旨在降低輔導的門檻及輔導形式，讓更多人接觸到有質素的輔導服務，得到心靈的療癒及情緒支援。</p>
-        <p>我們提供一對一線上輔導，由你選擇以 Zoom 視像 / 面對面、網上語音或文字形式進行服務。你亦可以選擇自己心儀的輔導員進行輔導，mehliu 團隊會盡量配合，往後由同一位輔導員持續跟進。</p>
-        <a href="https://www.mehliu.hk/about" class="btn-outline" style="margin-top:10px;">了解更多</a>
-      </div>
-      <div class="about-visual">
-        <div class="a-stat">
-          <div class="num">100+</div>
-          <div class="lbl">服務個案</div>
-        </div>
-        <div class="a-stat">
-          <div class="num">4 位</div>
-          <div class="lbl">專業輔導員</div>
-        </div>
-        <div class="a-stat">
-          <div class="num">3 日</div>
-          <div class="lbl">一般預約時間</div>
-        </div>
-        <div class="a-stat">
-          <div class="num">視像 / 語音 / 文字</div>
-          <div class="lbl">多種輔導形式靈活選擇</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     COUNSELORS
-════════════════════════════════════════════ -->
-<section id="counselors">
-  <div class="container">
-    <h2 class="sec-title">我們的輔導員</h2>
-    <p class="sec-sub">每位輔導員均持有專業資格，以真誠陪伴你走每一步</p>
-    <div class="counselors-grid">
-      <div class="c-card">
-        <div class="c-photo">🌿</div>
-        <div class="c-info">
-          <h3>言姑娘 Sam</h3>
-          <div class="c-role">現職社工 · 大學導師 · 資深輔導員</div>
-          <p>香港大學社會工作碩士，具豐富輔導及大學教學經驗，本著社工信念服務每位客戶。</p>
-        </div>
-      </div>
-      <div class="c-card">
-        <div class="c-photo">🌱</div>
-        <div class="c-info">
-          <h3>玉姑娘 NAT</h3>
-          <div class="c-role">現職社工 · 精神健康急救導師</div>
-          <p>香港大學社會工作碩士，線上線下輔導員，精神健康急救認證導師。</p>
-        </div>
-      </div>
-      <div class="c-card">
-        <div class="c-photo">🍃</div>
-        <div class="c-info">
-          <h3>輔導員 C</h3>
-          <div class="c-role">心理輔導師 · 心理治療師</div>
-          <p>香港理工大學社會工作學士，持有心理輔導及心理治療專業資格，豐富實務經驗。</p>
-        </div>
-      </div>
-      <div class="c-card">
-        <div class="c-photo">🌾</div>
-        <div class="c-info">
-          <h3>輔導員 D</h3>
-          <div class="c-role">心理學及輔導碩士</div>
-          <p>海外大學心理學及輔導碩士，融匯中西輔導理論，提供全方位情緒支援。</p>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:44px;">
-      <a href="https://www.mehliu.hk/counselors" class="btn-outline">認識更多輔導員</a>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     PRICING
-════════════════════════════════════════════ -->
-<section id="pricing">
-  <div class="container">
-    <h2 class="sec-title">網上輔導收費</h2>
-    <p class="sec-sub">透明定價 · 套票更划算</p>
-    <div class="pricing-grid">
-      <div class="p-card">
-        <div class="p-sessions">單節</div>
-        <div class="p-price">$550<sub>/節</sub></div>
-        <div class="p-per">50 分鐘</div>
-        <a href="https://www.mehliu.hk/booking" class="p-btn">立即預約</a>
-      </div>
-      <div class="p-card">
-        <div class="p-sessions">四節套票</div>
-        <div class="p-price">$2000<sub>/套</sub></div>
-        <div class="p-per">平均 $500 / 50分鐘</div>
-        <a href="https://www.mehliu.hk/booking" class="p-btn">立即預約</a>
-      </div>
-      <div class="p-card featured">
-        <div class="badge">最受歡迎</div>
-        <div class="p-sessions">六節套票</div>
-        <div class="p-price">$2790<sub>/套</sub></div>
-        <div class="p-per">平均 $465 / 50分鐘</div>
-        <a href="https://www.mehliu.hk/booking" class="p-btn">立即預約</a>
-      </div>
-      <div class="p-card">
-        <div class="p-sessions">八節套票</div>
-        <div class="p-price">$3520<sub>/套</sub></div>
-        <div class="p-per">平均 $440 / 50分鐘</div>
-        <a href="https://www.mehliu.hk/booking" class="p-btn">立即預約</a>
-      </div>
-    </div>
-    <div class="trial-box">
-      <h3>🌿 首次輔導體驗</h3>
-      <p>第一次嘗試？以 <strong style="color:var(--mint)">$250 / 30分鐘</strong> 輕鬆體驗輔導服務，踏出療癒第一步。</p>
-      <p style="font-size:12px;opacity:.45;margin-top:8px;">*套票有效期為 6 個月</p>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     TESTIMONIALS
-════════════════════════════════════════════ -->
-<section id="testimonials">
-  <div class="container">
-    <h2 class="sec-title">客戶評價</h2>
-    <p class="sec-sub">真實的聲音，真實的療癒</p>
-    <div class="t-grid">
-      <div class="t-card">
-        <div class="stars">★★★★★</div>
-        <p class="t-text">「輔導員說話語氣溫柔，很舒服，可以很放心說自己的心事。而且可以用平民價錢接受專業服務，很難得。」</p>
-        <div class="t-author">— 咩寮用家</div>
-      </div>
-      <div class="t-card">
-        <div class="stars">★★★★★</div>
-        <p class="t-text">「我覺得凌姑娘好有 responsive，好快就約到，同埋佢都好 supportive 同有細心聆聽，幫我攞個輔導方向，亦會用方法教我用另一角度諗事情。」</p>
-        <div class="t-author">— 咩寮用家</div>
-      </div>
-      <div class="t-card">
-        <div class="stars">★★★★★</div>
-        <p class="t-text">「感謝 Mehliu 提供一個親民嘅價錢，使香港人去傾吓自己心事，同埋搵到自己嘅盲點同 insight，令到自己成長得更加多。」</p>
-        <div class="t-author">— 咩寮用家</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     CONTACT
-════════════════════════════════════════════ -->
-<section id="contact">
-  <div class="container">
-    <div class="contact-tag">想說的話很多</div>
-    <h2 class="sec-title">只是能懂的人太少……</h2>
-    <p class="contact-lead">我們在這裡。讓我們陪你說。</p>
-    <a href="https://www.mehliu.hk/booking" class="btn-primary" style="font-size:18px;padding:18px 60px;">立即預約</a>
-    <div class="contact-links">
-      <a href="mailto:info.mehliuhk@gmail.com">📧 info.mehliuhk@gmail.com</a>
-      <a href="https://www.instagram.com/mehliu.hk" target="_blank">📷 @Mehliu.hk</a>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
-<footer>
-  <p>© 2024 Mehliu 咩寮 · 網上心理輔導 · 香港</p>
-  <p style="margin-top:6px;"><a href="https://www.mehliu.hk/privacy">私隱政策</a></p>
-</footer>
+  <p class="footer-note">本地文件 · Desktop/B2 · github.com/dannyling111/B2</p>
 
 </body>
 </html>

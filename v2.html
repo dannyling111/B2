@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mehliu 咩寮 · 網上心理輔導</title>
+  <style>
+    /* ══ TOKENS ══════════════════════════════════════════════ */
+    :root {
+      --ink:     #1A2E2A;
+      --forest:  #2B4742;
+      --mid-g:   #3D5C56;
+      --sage:    #85987D;
+      --mint:    #BCD1CD;
+      --pale:    #D8EAE7;
+      --cream:   #F5F0EB;
+      --warm:    #FFFDF9;
+      --gold:    #C9A970;
+      --gold-lt: #F0E4CA;
+      --white:   #FFFFFF;
+      --text:    #2A2A2A;
+      --muted:   #6B7280;
+      --border:  rgba(43,71,66,.1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;color:var(--text);background:var(--warm);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+    /* ══ SCROLL ANIMATION ════════════════════════════════════ */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:.1s}
+    .reveal-delay-2{transition-delay:.2s}
+    .reveal-delay-3{transition-delay:.3s}
+    .reveal-delay-4{transition-delay:.4s}
+
+    /* ══ NAV ═════════════════════════════════════════════════ */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:999;
+      height:72px;
+      background:rgba(255,253,249,.92);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;padding:0 60px;
+    }
+    .logo{text-decoration:none;display:flex;align-items:baseline;gap:8px}
+    .logo-mark{font-size:21px;font-weight:800;font-style:italic;color:var(--forest);letter-spacing:.5px}
+    .logo-cn{font-size:13px;color:var(--sage);font-weight:500;letter-spacing:1px}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none;margin-left:auto}
+    .nav-links a{text-decoration:none;color:var(--forest);font-size:14px;font-weight:500;letter-spacing:.3px;position:relative;transition:color .2s}
+    .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1.5px;background:var(--gold);transform:scaleX(0);transition:transform .25s;transform-origin:left}
+    .nav-links a:hover{color:var(--ink)}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .nav-book{background:var(--forest);color:var(--white)!important;padding:10px 24px;border-radius:6px;font-weight:600!important;transition:background .2s,transform .2s!important}
+    .nav-book:hover{background:var(--ink)!important;transform:translateY(-1px)!important}
+    .nav-book::after{display:none!important}
+
+    /* ══ HERO ════════════════════════════════════════════════ */
+    #hero{
+      min-height:100vh;padding:72px 60px 0;
+      display:grid;grid-template-columns:1fr 1fr;
+      align-items:center;gap:60px;
+      background:var(--warm);
+      position:relative;overflow:hidden;
+    }
+    #hero::before{
+      content:'';position:absolute;
+      top:-20%;right:-15%;
+      width:70vw;height:70vw;max-width:800px;max-height:800px;
+      background:radial-gradient(circle, rgba(188,209,205,.35) 0%, rgba(133,152,125,.12) 40%, transparent 70%);
+      border-radius:50%;pointer-events:none;
+    }
+    #hero::after{
+      content:'';position:absolute;
+      bottom:-10%;left:-10%;
+      width:40vw;height:40vw;
+      background:radial-gradient(circle, rgba(201,169,112,.1) 0%, transparent 65%);
+      border-radius:50%;pointer-events:none;
+    }
+    .hero-left{position:relative;z-index:1;padding-top:40px;padding-bottom:80px}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--gold-lt);color:var(--forest);font-size:12px;font-weight:700;letter-spacing:1.5px;padding:6px 14px;border-radius:4px;margin-bottom:28px}
+    .hero-eyebrow span{width:6px;height:6px;background:var(--gold);border-radius:50%;display:inline-block}
+    h1{font-size:clamp(40px,5vw,64px);font-weight:800;color:var(--ink);line-height:1.12;letter-spacing:-1px;margin-bottom:20px}
+    h1 em{font-style:normal;color:var(--forest);position:relative;display:inline-block}
+    h1 em::after{content:'';position:absolute;bottom:4px;left:0;right:0;height:3px;background:var(--gold);border-radius:2px}
+    .hero-sub{font-size:17px;color:var(--muted);line-height:1.75;margin-bottom:36px;max-width:480px}
+    .hero-ctas{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:48px}
+    .cta-main{background:var(--forest);color:var(--white);padding:16px 36px;border-radius:8px;font-size:16px;font-weight:700;text-decoration:none;transition:all .25s;box-shadow:0 4px 20px rgba(43,71,66,.25)}
+    .cta-main:hover{background:var(--ink);transform:translateY(-2px);box-shadow:0 8px 32px rgba(43,71,66,.3)}
+    .cta-sec{color:var(--forest);font-size:15px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:6px;border-bottom:1.5px solid transparent;padding-bottom:1px;transition:border-color .2s}
+    .cta-sec:hover{border-color:var(--forest)}
+    .hero-trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+    .trust-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+    .trust-dot{width:5px;height:5px;background:var(--sage);border-radius:50%}
+    .hero-right{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;padding-top:100px;padding-bottom:60px}
+    /* Mehliu Cards in hero */
+    .mehliu-card{background:var(--white);border-radius:16px;padding:28px 32px;box-shadow:0 2px 20px rgba(43,71,66,.08);border:1px solid var(--border);transition:transform .3s,box-shadow .3s}
+    .mehliu-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(43,71,66,.12)}
+    .mc-head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+    .mc-num{width:36px;height:36px;background:var(--forest);color:var(--white);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+    .mc-title{font-size:20px;font-weight:800;color:var(--ink)}
+    .mc-role{font-size:12px;color:var(--sage);font-weight:600;letter-spacing:.5px}
+    .mc-desc{font-size:14px;color:var(--muted);line-height:1.75}
+    .mc-accent{border-left:3px solid var(--gold)}
+
+    /* ══ SECTION BASE ════════════════════════════════════════ */
+    section{padding:96px 60px}
+    .container{max-width:1140px;margin:0 auto}
+    .section-label{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--sage);text-transform:uppercase;margin-bottom:12px;text-align:center}
+    .section-title{font-size:clamp(28px,4vw,42px);font-weight:800;color:var(--ink);text-align:center;margin-bottom:14px;letter-spacing:-.5px;line-height:1.2}
+    .section-body{text-align:center;font-size:16px;color:var(--muted);line-height:1.8;max-width:580px;margin:0 auto 64px}
+    .btn-ghost{display:inline-block;border:1.5px solid var(--forest);color:var(--forest);padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;transition:all .22s}
+    .btn-ghost:hover{background:var(--forest);color:var(--white)}
+
+    /* ══ HOW IT WORKS ════════════════════════════════════════ */
+    #how{background:var(--cream)}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+    .steps::before{content:'';position:absolute;top:40px;left:calc(100%/6);right:calc(100%/6);height:1px;background:linear-gradient(90deg,transparent,var(--mint),var(--mint),transparent);z-index:0}
+    .step{text-align:center;padding:0 32px;position:relative;z-index:1}
+    .step-circle{width:80px;height:80px;border-radius:50%;background:var(--white);border:2px solid var(--mint);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;position:relative;box-shadow:0 4px 16px rgba(43,71,66,.08)}
+    .step-circle::after{content:attr(data-n);position:absolute;top:-8px;right:-8px;width:24px;height:24px;background:var(--forest);color:var(--white);border-radius:50%;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+    .step-icon{width:36px;height:36px;stroke:var(--forest);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+    .step-name{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px}
+    .step-hk{font-size:13px;color:var(--sage);font-weight:600;letter-spacing:.5px;margin-bottom:14px}
+    .step-desc{font-size:14px;color:var(--muted);line-height:1.8}
+
+    /* ══ FEATURES ════════════════════════════════════════════ */
+    #why-us{background:var(--warm)}
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+    .feat{display:flex;gap:20px;padding:28px;background:var(--white);border-radius:12px;border:1px solid var(--border);transition:box-shadow .25s}
+    .feat:hover{box-shadow:0 8px 32px rgba(43,71,66,.08)}
+    .feat-icon{width:48px;height:48px;background:var(--pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .feat-icon svg{width:24px;height:24px;stroke:var(--forest);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .feat-text h3{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px}
+    .feat-text p{font-size:14px;color:var(--muted);line-height:1.75}
+
+    /* ══ COUNSELORS ══════════════════════════════════════════ */
+    #counselors{background:var(--cream)}
+    .c-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+    .c-card2{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:transform .25s,box-shadow .25s}
+    .c-card2:hover{transform:translateY(-6px);box-shadow:0 20px 56px rgba(43,71,66,.1)}
+    .c-top{height:180px;background:linear-gradient(160deg,#2B4742 0%,#1A2E2A 100%);display:flex;align-items:flex-end;padding:20px}
+    .c-tag{background:rgba(188,209,205,.2);border:1px solid rgba(188,209,205,.4);color:var(--mint);font-size:11px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:4px}
+    .c-body{padding:24px}
+    .c-body h3{font-size:18px;font-weight:800;color:var(--ink);margin-bottom:4px}
+    .c-quals{font-size:12px;color:var(--sage);font-weight:600;letter-spacing:.3px;margin-bottom:12px}
+    .c-body p{font-size:13px;color:var(--muted);line-height:1.7}
+    .c-badge{display:inline-block;background:var(--pale);color:var(--forest);font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;margin-top:14px}
+
+    /* ══ PRICING ═════════════════════════════════════════════ */
+    #pricing{background:var(--ink)}
+    #pricing .section-label{color:var(--sage)}
+    #pricing .section-title{color:var(--white)}
+    #pricing .section-body{color:rgba(255,255,255,.55)}
+    .p-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+    .p2{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:36px 28px;text-align:center;transition:all .25s;position:relative}
+    .p2:hover{background:rgba(255,255,255,.1);transform:translateY(-4px)}
+    .p2.best{background:rgba(188,209,205,.12);border-color:var(--mint);border-width:1.5px}
+    .p2-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--mint);color:var(--ink);font-size:11px;font-weight:800;padding:3px 14px;border-radius:20px;letter-spacing:.5px;white-space:nowrap}
+    .p2-label{font-size:12px;font-weight:700;color:var(--mint);letter-spacing:1.5px;margin-bottom:16px;text-transform:uppercase}
+    .p2-price{font-size:clamp(40px,5vw,56px);font-weight:800;color:var(--white);line-height:1;letter-spacing:-1px}
+    .p2-unit{font-size:15px;font-weight:400;color:rgba(255,255,255,.5)}
+    .p2-avg{font-size:13px;color:var(--sage);margin:8px 0 24px}
+    .p2-cta{display:block;background:rgba(255,255,255,.1);color:var(--white);border:1px solid rgba(255,255,255,.2);padding:12px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;transition:all .2s}
+    .p2-cta:hover{background:var(--white);color:var(--ink)}
+    .p2.best .p2-cta{background:var(--mint);color:var(--ink);border-color:var(--mint)}
+    .p2.best .p2-cta:hover{background:var(--white)}
+    .trial2{margin-top:40px;background:rgba(201,169,112,.1);border:1px solid rgba(201,169,112,.25);border-radius:12px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+    .trial2-text h3{font-size:17px;font-weight:700;color:var(--gold);margin-bottom:6px}
+    .trial2-text p{font-size:14px;color:rgba(255,255,255,.55);line-height:1.65}
+    .trial2 a{background:var(--gold);color:var(--ink);padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;transition:all .2s}
+    .trial2 a:hover{background:#b8963e;transform:translateY(-1px)}
+
+    /* ══ TESTIMONIALS ════════════════════════════════════════ */
+    #reviews{background:var(--warm)}
+    .r-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+    .r-card{background:var(--white);border-radius:14px;padding:32px;border:1px solid var(--border)}
+    .r-stars{display:flex;gap:3px;margin-bottom:16px}
+    .r-stars span{color:var(--gold);font-size:16px}
+    .r-text{font-size:15px;color:var(--text);line-height:1.85;margin-bottom:20px;font-style:italic}
+    .r-footer{display:flex;align-items:center;gap:10px}
+    .r-avatar{width:36px;height:36px;background:var(--pale);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .r-avatar svg{width:18px;height:18px;stroke:var(--sage);fill:none;stroke-width:1.8}
+    .r-name{font-size:13px;font-weight:700;color:var(--ink)}
+    .r-sub{font-size:12px;color:var(--muted)}
+
+    /* ══ FAQ ═════════════════════════════════════════════════ */
+    #faq{background:var(--cream)}
+    .faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+    .faq-item{background:var(--white);border-radius:10px;border:1px solid var(--border);overflow:hidden}
+    .faq-q{width:100%;background:none;border:none;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:15px;font-weight:600;color:var(--ink);text-align:left;gap:16px}
+    .faq-q:hover{color:var(--forest)}
+    .faq-arrow{width:20px;height:20px;stroke:var(--sage);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .3s}
+    .faq-item.open .faq-arrow{transform:rotate(180deg)}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+    .faq-item.open .faq-a{max-height:300px;padding:0 24px 20px}
+    .faq-a p{font-size:14px;color:var(--muted);line-height:1.85}
+
+    /* ══ CTA BAND ════════════════════════════════════════════ */
+    #cta-band{
+      background:linear-gradient(135deg,var(--forest) 0%,var(--ink) 100%);
+      padding:96px 60px;text-align:center;position:relative;overflow:hidden;
+    }
+    #cta-band::before{content:'';position:absolute;top:-50%;left:-20%;width:140%;height:200%;background:radial-gradient(ellipse 60% 60% at 60% 40%,rgba(188,209,205,.12) 0%,transparent 65%);pointer-events:none}
+    #cta-band .section-label{color:var(--sage)}
+    #cta-band .section-title{color:var(--white);margin-bottom:14px}
+    .cta-sub2{font-size:17px;color:rgba(255,255,255,.6);margin-bottom:44px}
+    .cta-contacts{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:44px}
+    .cta-contacts a{color:rgba(255,255,255,.55);text-decoration:none;font-size:14px;display:flex;align-items:center;gap:6px;transition:color .2s}
+    .cta-contacts a:hover{color:var(--mint)}
+
+    /* ══ FOOTER ══════════════════════════════════════════════ */
+    footer{background:var(--ink);padding:32px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+    .ft-logo{font-size:16px;font-weight:700;font-style:italic;color:rgba(255,255,255,.5);text-decoration:none}
+    .ft-copy{font-size:13px;color:rgba(255,255,255,.3)}
+    .ft-links{display:flex;gap:20px}
+    .ft-links a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s}
+    .ft-links a:hover{color:var(--mint)}
+
+    /* ══ RESPONSIVE ══════════════════════════════════════════ */
+    @media(max-width:1024px){#hero{grid-template-columns:1fr;padding:120px 40px 60px}.hero-right{display:none}.steps::before{display:none}}
+    @media(max-width:768px){nav{padding:0 24px}.nav-links{display:none}section{padding:72px 24px}#cta-band,footer{padding:72px 24px}.trial2{flex-direction:column}}
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ════════════════════════════════════════════════ -->
+<nav>
+  <a href="#hero" class="logo">
+    <span class="logo-mark">Mehliu</span>
+    <span class="logo-cn">咩寮</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">咩寮方式</a></li>
+    <li><a href="#why-us">為何選擇</a></li>
+    <li><a href="#counselors">輔導員</a></li>
+    <li><a href="#pricing">收費</a></li>
+    <li><a href="#faq">常見問題</a></li>
+    <li><a href="https://www.mehliu.hk/booking" class="nav-book">立即預約 →</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow"><span></span> 香港首選網上心理輔導平台</div>
+    <h1>讓聊天<br>帶來<em>心靈療癒</em></h1>
+    <p class="hero-sub">咩寮由香港大學社工碩士畢業的<strong>註冊社工</strong>創立。專業、親民、保密——讓傾訴變成一種力量。</p>
+    <div class="hero-ctas">
+      <a href="https://www.mehliu.hk/booking" class="cta-main">立即預約輔導</a>
+      <a href="#how" class="cta-sec">了解咩寮方式 ↓</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item"><div class="trust-dot"></div>註冊社工資格</div>
+      <div class="trust-item"><div class="trust-dot"></div>$250 體驗首節</div>
+      <div class="trust-item"><div class="trust-dot"></div>3日內預約</div>
+      <div class="trust-item"><div class="trust-dot"></div>嚴格保密</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="mehliu-card reveal">
+      <div class="mc-head"><div class="mc-num">01</div><div><div class="mc-title">咩料</div><div class="mc-role">你想傾的嘢</div></div></div>
+      <p class="mc-desc">感情、工作、家庭、情緒——無論面對咩，我們不評判，只聆聽。</p>
+    </div>
+    <div class="mehliu-card mc-accent reveal reveal-delay-1">
+      <div class="mc-head"><div class="mc-num">02</div><div><div class="mc-title">咩聊</div><div class="mc-role">點樣去傾</div></div></div>
+      <p class="mc-desc">Zoom 視像、語音或文字，由你揀輔導員，節奏由你控制。</p>
+    </div>
+    <div class="mehliu-card reveal reveal-delay-2">
+      <div class="mc-head"><div class="mc-num">03</div><div><div class="mc-title">咩療</div><div class="mc-role">傾完有咩改變</div></div></div>
+      <p class="mc-desc">重新認識自己，找到情緒出口，帶著更輕盈的心繼續前行。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ════════════════════════════════════════ -->
+<section id="how">
+  <div class="container">
+    <p class="section-label reveal">咩寮方式</p>
+    <h2 class="section-title reveal">三步驟，開啟你的療癒旅程</h2>
+    <p class="section-body reveal">我們相信每個人都值得被聆聽。咩寮把複雜的心理輔導化繁為簡，讓你安心踏出第一步。</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-circle" data-n="1">
+          <svg class="step-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="step-name">咩料</div>
+        <div class="step-hk">你想傾的嘢</div>
+        <p class="step-desc">將心中積壓的事情，不論大小，說出來。感情困惑、工作壓力、莫名焦慮，我們的輔導員都準備好聆聽。</p>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-circle" data-n="2">
+          <svg class="step-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="step-name">咩聊</div>
+        <div class="step-hk">點樣去傾</div>
+        <p class="step-desc">由你揀輔導員，由你揀形式——Zoom 視像、語音或純文字。預約簡單，一般三日內即可開始。</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-circle" data-n="3">
+          <svg class="step-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="step-name">咩療</div>
+        <div class="step-hk">傾完有咩改變</div>
+        <p class="step-desc">透過持續輔導，逐步建立心理韌性，找到屬於自己的情緒出口，以更完整的自我面對生活。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHY US ══════════════════════════════════════════════ -->
+<section id="why-us">
+  <div class="container">
+    <p class="section-label reveal">為何選擇咩寮</p>
+    <h2 class="section-title reveal">專業、親民、保密</h2>
+    <p class="section-body reveal">我們不只是提供輔導服務，而是陪你走過每一個情緒的轉角。</p>
+    <div class="feat-grid">
+      <div class="feat reveal">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.42a12.08 12.08 0 01.34 2.76A12 12 0 0112 21a12 12 0 01-6.5-1.66 12.08 12.08 0 01.34-2.76L12 14z"/></svg></div>
+        <div class="feat-text"><h3>社工局註冊資格</h3><p>所有輔導員均持社會工作者註冊局牌照，具多年情緒輔導前線實戰經驗，本著社工信念服務每位客戶。</p></div>
+      </div>
+      <div class="feat reveal reveal-delay-1">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="feat-text"><h3>彈性預約，即日可約</h3><p>預約流程簡單，一般三日內成功，最快可提供即日服務。只需電腦或手機，隨時隨地開始輔導。</p></div>
+      </div>
+      <div class="feat reveal reveal-delay-2">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div class="feat-text"><h3>大眾化收費</h3><p>$250 入門體驗，單節 $550 起，套票低至每節 $440。我們相信每個人都值得得到有質素的情緒支援。</p></div>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="feat-text"><h3>嚴格保密承諾</h3><p>除非談話內容影響人身安全，否則輔導內容絕對保密。讓你在安全的空間內，毫無保留地傾訴。</p></div>
+      </div>
+      <div class="feat reveal reveal-delay-1">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="feat-text"><h3>同一輔導員持續跟進</h3><p>由你自行選擇輔導員，建立信任關係後，往後的輔導均由同一位輔導員負責，確保連貫性。</p></div>
+      </div>
+      <div class="feat reveal reveal-delay-2">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="feat-text"><h3>多種輔導形式</h3><p>Zoom 視像 / 面對面、網上語音、純文字輔導，三種形式自由選擇，配合你的習慣與需要。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COUNSELORS ══════════════════════════════════════════ -->
+<section id="counselors">
+  <div class="container">
+    <p class="section-label reveal">我們的團隊</p>
+    <h2 class="section-title reveal">認識你的輔導員</h2>
+    <p class="section-body reveal">每位輔導員均持有專業資格，在不同領域累積豐富經驗，以真誠與耐心陪伴你走每一步。</p>
+    <div class="c-grid">
+      <div class="c-card2 reveal">
+        <div class="c-top"><span class="c-tag">HKU MSW</span></div>
+        <div class="c-body">
+          <h3>言姑娘 Sam</h3>
+          <div class="c-quals">香港大學社會工作碩士</div>
+          <p>現職社工兼大學導師，資深輔導員。本著社工信念，以溫暖而專業的方式陪伴每位客戶。</p>
+          <span class="c-badge">大學導師 · 資深輔導員</span>
+        </div>
+      </div>
+      <div class="c-card2 reveal reveal-delay-1">
+        <div class="c-top"><span class="c-tag">HKU MSW</span></div>
+        <div class="c-body">
+          <h3>玉姑娘 NAT</h3>
+          <div class="c-quals">香港大學社會工作碩士</div>
+          <p>現職社工，精神健康急救認證導師，提供線上線下輔導服務，擅長情緒危機支援。</p>
+          <span class="c-badge">精神健康急救導師</span>
+        </div>
+      </div>
+      <div class="c-card2 reveal reveal-delay-2">
+        <div class="c-top"><span class="c-tag">PolyU BSW</span></div>
+        <div class="c-body">
+          <h3>輔導員 C</h3>
+          <div class="c-quals">香港理工大學社會工作學士</div>
+          <p>持有心理輔導及心理治療專業資格，豐富個案實務經驗，擅長認知行為治療取向。</p>
+          <span class="c-badge">心理輔導師 · 心理治療師</span>
+        </div>
+      </div>
+      <div class="c-card2 reveal reveal-delay-3">
+        <div class="c-top"><span class="c-tag">海外大學碩士</span></div>
+        <div class="c-body">
+          <h3>輔導員 D</h3>
+          <div class="c-quals">海外大學心理學及輔導碩士</div>
+          <p>融匯中西輔導理論，以人本主義為核心，提供全方位情緒支援，助你建立心理韌性。</p>
+          <span class="c-badge">心理學及輔導碩士</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px;" class="reveal">
+      <a href="https://www.mehliu.hk/counselors" class="btn-ghost">查看完整輔導員介紹</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ═════════════════════════════════════════════ -->
+<section id="pricing">
+  <div class="container">
+    <p class="section-label reveal">收費透明</p>
+    <h2 class="section-title reveal">簡單定價，無隱藏費用</h2>
+    <p class="section-body reveal">套票有效期 6 個月，按你的節奏進行輔導。</p>
+    <div class="p-grid">
+      <div class="p2 reveal">
+        <div class="p2-label">單節</div>
+        <div class="p2-price">$550<span class="p2-unit">/節</span></div>
+        <div class="p2-avg">50 分鐘</div>
+        <a href="https://www.mehliu.hk/booking" class="p2-cta">選擇此方案</a>
+      </div>
+      <div class="p2 reveal reveal-delay-1">
+        <div class="p2-label">四節套票</div>
+        <div class="p2-price">$2000<span class="p2-unit">/套</span></div>
+        <div class="p2-avg">平均 $500 / 節 · 慳 $200</div>
+        <a href="https://www.mehliu.hk/booking" class="p2-cta">選擇此方案</a>
+      </div>
+      <div class="p2 best reveal reveal-delay-2">
+        <div class="p2-badge">最多人選擇</div>
+        <div class="p2-label">六節套票</div>
+        <div class="p2-price">$2790<span class="p2-unit">/套</span></div>
+        <div class="p2-avg">平均 $465 / 節 · 慳 $510</div>
+        <a href="https://www.mehliu.hk/booking" class="p2-cta">選擇此方案</a>
+      </div>
+      <div class="p2 reveal reveal-delay-3">
+        <div class="p2-label">八節套票</div>
+        <div class="p2-price">$3520<span class="p2-unit">/套</span></div>
+        <div class="p2-avg">平均 $440 / 節 · 慳 $880</div>
+        <a href="https://www.mehliu.hk/booking" class="p2-cta">選擇此方案</a>
+      </div>
+    </div>
+    <div class="trial2 reveal">
+      <div class="trial2-text">
+        <h3>✦ 首次體驗優惠</h3>
+        <p>未試過輔導？以 <strong style="color:var(--gold)">$250 / 30分鐘</strong> 輕鬆體驗，感受咩寮的輔導氛圍，再決定是否繼續。</p>
+      </div>
+      <a href="https://www.mehliu.hk/booking">立即體驗 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ════════════════════════════════════════ -->
+<section id="reviews">
+  <div class="container">
+    <p class="section-label reveal">真實評價</p>
+    <h2 class="section-title reveal">他們說……</h2>
+    <p class="section-body reveal">每一個評價，都是一段真實的療癒旅程。</p>
+    <div class="r-grid">
+      <div class="r-card reveal">
+        <div class="r-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="r-text">「輔導員說話語氣溫柔，很舒服，可以很放心說自己的心事。而且可以用平民價錢接受專業服務，很難得。」</p>
+        <div class="r-footer"><div class="r-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="r-name">咩寮用家</div><div class="r-sub">情感輔導</div></div></div>
+      </div>
+      <div class="r-card reveal reveal-delay-1">
+        <div class="r-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="r-text">「姑娘好有 responsive，好快就約到。佢都好 supportive 同有細心聆聽，幫我攞個輔導方向，亦會教我用另一角度諗事情。」</p>
+        <div class="r-footer"><div class="r-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="r-name">咩寮用家</div><div class="r-sub">工作壓力輔導</div></div></div>
+      </div>
+      <div class="r-card reveal reveal-delay-2">
+        <div class="r-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="r-text">「感謝 Mehliu 提供親民的價錢，讓香港人可以傾吓自己心事，搵到自己的盲點同 insight，令到自己成長得更多。」</p>
+        <div class="r-footer"><div class="r-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="r-name">咩寮用家</div><div class="r-sub">自我成長輔導</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ═════════════════════════════════════════════════ -->
+<section id="faq">
+  <div class="container">
+    <p class="section-label reveal">常見問題</p>
+    <h2 class="section-title reveal">你可能想知道……</h2>
+    <p class="section-body reveal"></p>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q">輔導員是否有正式資格？<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>咩寮所有輔導員均為香港社會工作者註冊局的<strong>註冊社工</strong>，並持有相關心理輔導資格。我們的創辦人畢業於香港大學及海外大學社會工作碩士課程，具多年前線輔導實戰經驗。</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-q">輔導以哪種語言進行？<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>咩寮主要以<strong>廣東話</strong>提供輔導服務，部分輔導員亦可以普通話或英語進行。預約時可在備注欄說明你的語言偏好。</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-q">我可以自己選擇輔導員嗎？<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>可以。你可以在預約時選擇心儀的輔導員，咩寮團隊會盡量配合安排，往後亦會由同一位輔導員持續跟進，確保輔導關係的連貫性。</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-3">
+        <button class="faq-q">輔導內容會保密嗎？<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>是的。除非談話內容有機會影響自己或他人的生命安全（如嚴重自殺傾向），否則輔導內容一切保密，不會向任何第三方透露。</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">如何取消或更改預約？<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><p>如需更改或取消預約，請提前<strong>24小時</strong>通知我們。可透過電郵 info.mehliuhk@gmail.com 或 Instagram DM 聯絡。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA BAND ════════════════════════════════════════════ -->
+<section id="cta-band">
+  <div class="container">
+    <p class="section-label">開始你的旅程</p>
+    <h2 class="section-title">想說的話很多<br>只是能懂的人太少……</h2>
+    <p class="cta-sub2">我們在這裡。讓我們陪你說。</p>
+    <a href="https://www.mehliu.hk/booking" class="cta-main" style="font-size:17px;padding:18px 52px;">立即預約輔導 →</a>
+    <div class="cta-contacts">
+      <a href="mailto:info.mehliuhk@gmail.com">📧 info.mehliuhk@gmail.com</a>
+      <a href="https://www.instagram.com/mehliu.hk" target="_blank">📷 @Mehliu.hk</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#hero" class="ft-logo">Mehliu 咩寮</a>
+  <p class="ft-copy">© 2024 Mehliu 咩寮 · 網上心理輔導 · 香港</p>
+  <div class="ft-links">
+    <a href="https://www.mehliu.hk/privacy">私隱政策</a>
+    <a href="https://www.mehliu.hk">官方網站</a>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>

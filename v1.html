@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mehliu 咩寮 · V1</title>
+  <style>
+    :root {
+      --deep:   #003B31;
+      --forest: #2B4742;
+      --sage:   #85987D;
+      --mint:   #BCD1CD;
+      --cream:  #EEE9E4;
+      --white:  #FFFFFF;
+      --dark:   #1a1a1a;
+      --mid:    #555;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      height: 68px; background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px); border-bottom: 1px solid rgba(43,71,66,.08);
+      display: flex; align-items: center; padding: 0 48px; gap: 40px;
+    }
+    .nav-logo { text-decoration: none; font-size: 20px; font-weight: 700; font-style: italic; color: var(--forest); }
+    .nav-logo small { font-style: normal; font-weight: 400; font-size: 13px; color: var(--sage); margin-left: 6px; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin-left: auto; }
+    .nav-links a { text-decoration: none; color: var(--forest); font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--deep); }
+    .nav-cta { background: var(--forest) !important; color: var(--white) !important; padding: 9px 22px !important; border-radius: 50px !important; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #2B4742 0%, #003B31 55%, #001f1a 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; color: var(--white);
+      padding: 110px 40px 80px; position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 75% 35%, rgba(133,152,125,.18) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 40% at 20% 75%, rgba(188,209,205,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 700px; }
+    .hero-brand { font-size: clamp(52px,9vw,88px); font-weight: 300; letter-spacing: 4px; line-height: 1.1; margin-bottom: 10px; }
+    .hero-brand em { font-style: italic; font-weight: 800; color: var(--mint); }
+    .hero-tagline { font-size: clamp(20px,3.5vw,30px); font-weight: 300; letter-spacing: 3px; opacity: .9; margin-bottom: 36px; }
+    .hero-pills { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 52px; }
+    .pill-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .pill { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); color: var(--white); padding: 10px 24px; border-radius: 50px; font-size: 16px; font-weight: 600; letter-spacing: 2px; }
+    .pill-desc { font-size: 12px; color: var(--mint); opacity: .85; letter-spacing: .5px; }
+    .btn-primary { display: inline-block; background: var(--white); color: var(--forest); padding: 16px 52px; border-radius: 50px; font-size: 17px; font-weight: 700; text-decoration: none; box-shadow: 0 6px 24px rgba(0,0,0,.25); transition: all .25s; }
+    .btn-primary:hover { background: var(--mint); transform: translateY(-3px); }
+    .scroll-arrow { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); opacity: .45; animation: bob 2s infinite; font-size: 22px; color: var(--white); text-decoration: none; }
+    @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 100px 48px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .sec-title { text-align: center; font-size: clamp(28px,4vw,40px); font-weight: 700; color: var(--forest); margin-bottom: 12px; }
+    .sec-sub { text-align: center; font-size: 15px; color: var(--sage); letter-spacing: 1px; margin-bottom: 60px; }
+    .btn-outline { display: inline-block; border: 2px solid var(--forest); color: var(--forest); padding: 12px 32px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all .22s; }
+    .btn-outline:hover { background: var(--forest); color: var(--white); }
+
+    /* MEHLIU METHOD */
+    #method { background: var(--forest); }
+    #method .sec-title { color: var(--white); }
+    #method .sec-sub { color: var(--mint); }
+    .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .method-card { background: rgba(255,255,255,.07); padding: 48px 36px; text-align: center; position: relative; }
+    .method-card:hover { background: rgba(255,255,255,.12); }
+    .method-num { font-size: 13px; color: var(--mint); letter-spacing: 3px; font-weight: 600; margin-bottom: 16px; }
+    .method-title { font-size: clamp(28px,4vw,40px); font-weight: 800; color: var(--white); margin-bottom: 16px; }
+    .method-sub { font-size: 14px; color: var(--sage); letter-spacing: 1px; margin-bottom: 20px; font-weight: 600; }
+    .method-desc { font-size: 14px; color: rgba(255,255,255,.7); line-height: 1.8; }
+    .method-divider { position: absolute; right: 0; top: 20%; bottom: 20%; width: 1px; background: rgba(188,209,205,.2); }
+
+    /* WHY */
+    #why { background: var(--cream); }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 22px; }
+    .f-card { background: var(--white); border-radius: 18px; padding: 36px 26px; text-align: center; border: 1px solid rgba(133,152,125,.18); transition: transform .22s, box-shadow .22s; }
+    .f-card:hover { transform: translateY(-5px); box-shadow: 0 14px 44px rgba(43,71,66,.1); }
+    .f-icon { width: 58px; height: 58px; background: var(--mint); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .f-icon svg { width: 28px; height: 28px; stroke: var(--forest); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .f-card h3 { font-size: 16px; font-weight: 700; color: var(--forest); margin-bottom: 10px; }
+    .f-card p { font-size: 14px; color: var(--mid); line-height: 1.75; }
+
+    /* ABOUT */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .about-text h2 { font-size: clamp(24px,3vw,34px); font-weight: 700; color: var(--forest); line-height: 1.35; margin-bottom: 22px; }
+    .about-text p { font-size: 15px; color: var(--mid); line-height: 1.9; margin-bottom: 14px; }
+    .about-visual { background: linear-gradient(135deg, var(--mint) 0%, var(--sage) 100%); border-radius: 24px; padding: 48px 40px; }
+    .a-stat { margin-bottom: 28px; }
+    .a-stat:last-child { margin-bottom: 0; }
+    .a-stat .num { font-size: 38px; font-weight: 800; color: var(--white); line-height: 1; }
+    .a-stat .lbl { font-size: 14px; color: rgba(255,255,255,.8); margin-top: 4px; }
+
+    /* COUNSELORS */
+    #counselors { background: var(--cream); }
+    .counselors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 26px; }
+    .c-card { background: var(--white); border-radius: 20px; overflow: hidden; transition: transform .22s, box-shadow .22s; }
+    .c-card:hover { transform: translateY(-6px); box-shadow: 0 18px 52px rgba(43,71,66,.12); }
+    .c-photo { height: 200px; background: linear-gradient(135deg, var(--sage) 0%, var(--forest) 100%); display: flex; align-items: center; justify-content: center; }
+    .c-avatar { width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; }
+    .c-avatar svg { width: 40px; height: 40px; stroke: rgba(255,255,255,.6); fill: none; stroke-width: 1.5; }
+    .c-info { padding: 26px; }
+    .c-info h3 { font-size: 18px; font-weight: 700; color: var(--forest); margin-bottom: 5px; }
+    .c-role { font-size: 12px; font-weight: 600; color: var(--sage); letter-spacing: .5px; margin-bottom: 12px; }
+    .c-info p { font-size: 13px; color: var(--mid); line-height: 1.7; }
+
+    /* PRICING */
+    #pricing { background: var(--deep); color: var(--white); }
+    #pricing .sec-title { color: var(--white); }
+    #pricing .sec-sub { color: var(--mint); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .p-card { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.11); border-radius: 20px; padding: 38px 28px; text-align: center; position: relative; transition: all .22s; }
+    .p-card:hover { background: rgba(255,255,255,.13); transform: translateY(-4px); }
+    .p-card.featured { background: rgba(188,209,205,.15); border-color: var(--mint); border-width: 2px; }
+    .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--mint); color: var(--deep); font-size: 12px; font-weight: 700; padding: 4px 18px; border-radius: 50px; white-space: nowrap; }
+    .p-sessions { font-size: 13px; font-weight: 700; color: var(--mint); letter-spacing: 1px; margin-bottom: 14px; }
+    .p-price { font-size: clamp(38px,5vw,54px); font-weight: 800; line-height: 1; }
+    .p-price sub { font-size: 16px; font-weight: 400; opacity: .65; }
+    .p-per { font-size: 13px; opacity: .55; margin: 6px 0 22px; }
+    .p-btn { display: block; background: var(--white); color: var(--forest); padding: 12px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; transition: all .2s; }
+    .p-btn:hover { background: var(--mint); }
+    .trial-box { text-align: center; margin-top: 48px; background: rgba(255,255,255,.06); border: 1px dashed rgba(188,209,205,.4); border-radius: 16px; padding: 30px 24px; }
+    .trial-box h3 { font-size: 17px; color: var(--mint); margin-bottom: 8px; }
+    .trial-box p { font-size: 14px; opacity: .7; line-height: 1.7; }
+
+    /* TESTIMONIALS */
+    #testimonials { background: var(--cream); }
+    .t-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .t-card { background: var(--white); border-radius: 16px; padding: 30px; border-left: 4px solid var(--mint); box-shadow: 0 4px 20px rgba(43,71,66,.06); }
+    .t-text { font-size: 15px; color: var(--mid); line-height: 1.85; margin-bottom: 18px; }
+    .t-author { font-size: 13px; color: var(--sage); font-weight: 600; }
+    .stars { color: #f4a947; font-size: 14px; margin-bottom: 10px; }
+
+    /* CONTACT */
+    #contact { background: var(--forest); color: var(--white); text-align: center; }
+    #contact .sec-title { color: var(--white); margin-bottom: 10px; }
+    .contact-tag { font-size: clamp(18px,3vw,26px); color: var(--mint); font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; }
+    .contact-lead { font-size: 16px; opacity: .65; margin-bottom: 44px; }
+    .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 28px; margin-top: 44px; }
+    .contact-links a { color: var(--mint); text-decoration: none; font-size: 14px; opacity: .75; transition: opacity .2s; }
+    .contact-links a:hover { opacity: 1; }
+
+    footer { background: var(--deep); color: rgba(255,255,255,.35); text-align: center; padding: 26px 40px; font-size: 13px; line-height: 1.8; }
+    footer a { color: var(--mint); text-decoration: none; }
+
+    @media (max-width: 900px) { .about-grid{grid-template-columns:1fr} .about-visual{display:none} .method-grid{grid-template-columns:1fr} .method-divider{display:none} }
+    @media (max-width: 680px) { nav{padding:0 20px} .nav-links{display:none} section{padding:72px 24px} }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">Mehliu <small>咩寮</small></a>
+  <ul class="nav-links">
+    <li><a href="#method">咩寮方式</a></li>
+    <li><a href="#why">為何選擇我們</a></li>
+    <li><a href="#counselors">輔導員</a></li>
+    <li><a href="#pricing">收費</a></li>
+    <li><a href="#testimonials">客戶評價</a></li>
+    <li><a href="https://www.mehliu.hk/booking" class="nav-cta">立即預約</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-brand">咩寮 <em>Mehliu</em></div>
+    <div class="hero-tagline">讓聊天帶來心靈療癒</div>
+    <div class="hero-pills">
+      <div class="pill-wrap">
+        <span class="pill">咩料</span>
+        <span class="pill-desc">你想傾的嘢</span>
+      </div>
+      <div class="pill-wrap">
+        <span class="pill">咩聊</span>
+        <span class="pill-desc">點樣去傾</span>
+      </div>
+      <div class="pill-wrap">
+        <span class="pill">咩療</span>
+        <span class="pill-desc">傾完有咩改變</span>
+      </div>
+    </div>
+    <a href="https://www.mehliu.hk/booking" class="btn-primary">立即預約</a>
+  </div>
+  <a href="#method" class="scroll-arrow">↓</a>
+</section>
+
+<!-- MEHLIU METHOD -->
+<section id="method">
+  <div class="container">
+    <h2 class="sec-title">咩寮方式</h2>
+    <p class="sec-sub">三個步驟，帶你走過療癒旅程</p>
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="method-num">01</div>
+        <div class="method-title">咩料</div>
+        <div class="method-sub">你想傾的嘢</div>
+        <div class="method-desc">感情困惑、工作壓力、家庭問題、情緒低落……無論你面對咩，都可以放心說出口。我們不評判，只聆聽。</div>
+        <div class="method-divider"></div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">02</div>
+        <div class="method-title">咩聊</div>
+        <div class="method-sub">點樣去傾</div>
+        <div class="method-desc">由你揀 Zoom 視像、語音或文字形式，由你揀輔導員。節奏由你控制，沒有壓力，沒有批判，只有真誠的對話。</div>
+        <div class="method-divider"></div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">03</div>
+        <div class="method-title">咩療</div>
+        <div class="method-sub">傾完有咩改變</div>
+        <div class="method-desc">透過持續的輔導，重新認識自己，找到情緒的出口，培養更健康的心理狀態，帶著更輕盈的心繼續前行。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="container">
+    <h2 class="sec-title">為什麼要選擇咩寮？</h2>
+    <p class="sec-sub">專業 · 親民 · 保密 · 方便</p>
+    <div class="features-grid">
+      <div class="f-card">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.42a12.08 12.08 0 01.34 2.76A12 12 0 0112 21a12 12 0 01-6.5-1.66 12.08 12.08 0 01.34-2.76L12 14z"/></svg></div>
+        <h3>專業資質</h3>
+        <p>輔導員均為社會工作者註冊局<strong>註冊社工</strong>及<strong>心理輔導師</strong>，具多年情緒輔導前線經驗。</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <h3>輔導體驗</h3>
+        <p>提供 <strong>$250 / 30分鐘</strong>輔導體驗，讓你以優惠價錢輕鬆開啟輔導之門，無後顧之憂。</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg></div>
+        <h3>大眾化收費</h3>
+        <p>以更親民的收費降低接受優質輔導服務的門檻，讓每個人都能負擔得起情緒支援。</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <h3>彈性方便</h3>
+        <p>一般<strong>三日內</strong>預約成功，最快即日服務。電腦或電話均可，隨時隨地接受輔導。</p>
+      </div>
+      <div class="f-card">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <h3>嚴格保密</h3>
+        <p>除非談話內容影響生命安全，否則<strong>輔導內容一切保密</strong>，讓你放心傾訴。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>由香港社工創立<br>為你而生</h2>
+        <p>咩寮由香港大學及海外大學社會工作碩士畢業的註冊社工及心理輔導師創立，旨在降低輔導的門檻及輔導形式，讓更多人接觸到有質素的輔導服務，得到心靈的療癒及情緒支援。</p>
+        <p>我們提供一對一線上輔導，由你選擇以 Zoom 視像 / 面對面、網上語音或文字形式進行服務。你亦可以選擇自己心儀的輔導員進行輔導，往後會由同一位輔導員持續跟進。</p>
+        <a href="https://www.mehliu.hk/about" class="btn-outline" style="margin-top:10px;">了解更多</a>
+      </div>
+      <div class="about-visual">
+        <div class="a-stat"><div class="num">100+</div><div class="lbl">服務個案</div></div>
+        <div class="a-stat"><div class="num">4 位</div><div class="lbl">專業輔導員</div></div>
+        <div class="a-stat"><div class="num">3 日</div><div class="lbl">一般預約時間</div></div>
+        <div class="a-stat"><div class="num">即日</div><div class="lbl">最快可提供服務</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNSELORS -->
+<section id="counselors">
+  <div class="container">
+    <h2 class="sec-title">我們的輔導員</h2>
+    <p class="sec-sub">每位輔導員均持有專業資格，以真誠陪伴你走每一步</p>
+    <div class="counselors-grid">
+      <div class="c-card">
+        <div class="c-photo"><div class="c-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+        <div class="c-info"><h3>言姑娘 Sam</h3><div class="c-role">現職社工 · 大學導師 · 資深輔導員</div><p>香港大學社會工作碩士，具豐富輔導及大學教學經驗。</p></div>
+      </div>
+      <div class="c-card">
+        <div class="c-photo"><div class="c-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+        <div class="c-info"><h3>玉姑娘 NAT</h3><div class="c-role">現職社工 · 精神健康急救導師</div><p>香港大學社會工作碩士，精神健康急救認證導師。</p></div>
+      </div>
+      <div class="c-card">
+        <div class="c-photo"><div class="c-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+        <div class="c-info"><h3>輔導員 C</h3><div class="c-role">心理輔導師 · 心理治療師</div><p>香港理工大學社會工作學士，心理輔導及心理治療專業資格。</p></div>
+      </div>
+      <div class="c-card">
+        <div class="c-photo"><div class="c-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+        <div class="c-info"><h3>輔導員 D</h3><div class="c-role">心理學及輔導碩士</div><p>海外大學心理學及輔導碩士，融匯中西輔導理論與實踐。</p></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:44px;"><a href="https://www.mehliu.hk/counselors" class="btn-outline">認識更多輔導員</a></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <h2 class="sec-title">網上輔導收費</h2>
+    <p class="sec-sub">透明定價 · 套票更划算</p>
+    <div class="pricing-grid">
+      <div class="p-card"><div class="p-sessions">單節</div><div class="p-price">$550<sub>/節</sub></div><div class="p-per">50 分鐘</div><a href="https://www.mehliu.hk/booking" class="p-btn">立即預約</a></div>
+      <div class="p-card"><div class="p-sessions">四節套票</div><div class="p-price">$2000<sub>/套</sub></div><div class="p-per">平均 $500 / 50分鐘</div><a href="https://www.mehliu.hk/booking" class="p-btn">立即預約</a></div>
+      <div class="p-card featured"><div class="badge">最受歡迎</div><div class="p-sessions">六節套票</div><div class="p-price">$2790<sub>/套</sub></div><div class="p-per">平均 $465 / 50分鐘</div><a href="https://www.mehliu.hk/booking" class="p-btn">立即預約</a></div>
+      <div class="p-card"><div class="p-sessions">八節套票</div><div class="p-price">$3520<sub>/套</sub></div><div class="p-per">平均 $440 / 50分鐘</div><a href="https://www.mehliu.hk/booking" class="p-btn">立即預約</a></div>
+    </div>
+    <div class="trial-box"><h3>🌿 首次輔導體驗</h3><p>第一次嘗試？以 <strong style="color:var(--mint)">$250 / 30分鐘</strong> 輕鬆體驗輔導服務，踏出療癒第一步。</p><p style="font-size:12px;opacity:.45;margin-top:8px;">*套票有效期為 6 個月</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <h2 class="sec-title">客戶評價</h2>
+    <p class="sec-sub">真實的聲音，真實的療癒</p>
+    <div class="t-grid">
+      <div class="t-card"><div class="stars">★★★★★</div><p class="t-text">「輔導員說話語氣溫柔，很舒服，可以很放心說自己的心事。而且可以用平民價錢接受專業服務，很難得。」</p><div class="t-author">— 咩寮用家</div></div>
+      <div class="t-card"><div class="stars">★★★★★</div><p class="t-text">「我覺得凌姑娘好有 responsive，好快就約到，同埋佢都好 supportive 同有細心聆聽，幫我攞個輔導方向，亦會用方法教我用另一角度諗事情。」</p><div class="t-author">— 咩寮用家</div></div>
+      <div class="t-card"><div class="stars">★★★★★</div><p class="t-text">「感謝 Mehliu 提供一個親民嘅價錢，使香港人去傾吓自己心事，同埋搵到自己嘅盲點同 insight，令到自己成長得更加多。」</p><div class="t-author">— 咩寮用家</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-tag">想說的話很多</div>
+    <h2 class="sec-title">只是能懂的人太少……</h2>
+    <p class="contact-lead">我們在這裡。讓我們陪你說。</p>
+    <a href="https://www.mehliu.hk/booking" class="btn-primary" style="font-size:18px;padding:18px 60px;">立即預約</a>
+    <div class="contact-links">
+      <a href="mailto:info.mehliuhk@gmail.com">📧 info.mehliuhk@gmail.com</a>
+      <a href="https://www.instagram.com/mehliu.hk" target="_blank">📷 @Mehliu.hk</a>
+    </div>
+  </div>
+</section>
+
+<footer><p>© 2024 Mehliu 咩寮 · 網上心理輔導 · 香港</p><p style="margin-top:6px;"><a href="https://www.mehliu.hk/privacy">私隱政策</a></p></footer>
+</body>
+</html>
